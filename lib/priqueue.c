@@ -6,6 +6,7 @@
 
 int main(int argc, char *argv[]) 
 {
+    /*
     int a[] = { 7, 12, 1, -2, 0, 15, 4, 11, 9};
 
     int i;
@@ -25,13 +26,17 @@ int main(int argc, char *argv[])
     for(i = 0; i < 9; ++i){
         printf(" %d ", a[i]);
     }
+    */
 }
 
 queue* queue_create(){
   queue *q = (queue *) malloc(sizeof(queue));
+  q->surfaces = (mSurf) malloc(sizeof(mSurf)*150);
+  q->size = 150;
+  return q;
 
 }
-void queue_init(queue q){
+void queue_init(queue *q){
   Point a;
   Point b;
   Point c;
@@ -42,19 +47,21 @@ void queue_init(queue q){
   point_set( &d, 1, -1, 0);
   mSurf *lTri = mSurf_create(&a, &b, &d);
   mSurf *rTri = mSurf_create(&ab, &c, &d);
+  ordered_insert(lTri, q);
+  ordered_insert(rTri, q);
 
 }
 
-void ordered_insert(int number,int a[],int size){
+void ordered_insert(mSurf *surf,queue *q){
  int i=0;
  int index;
- while(number>a[i]){
+ while(surf->priVal > q->surfaces[i]){
    i++;}
 
 //push the rest to right by one
 index=i;
 
-i = size;
+i = 150;
 while ( i > index ) {
   a[i] = a[i-1];
   i--;
@@ -64,34 +71,34 @@ size++;
 
 }
 
-void quickSort( int a[], int l, int r)
+void quickSort( queue* q, int l, int r)
 {
    int j;
 
    if( l < r ) 
    {
     // divide and conquer
-        j = partition( a, l, r);
-       quickSort( a, l, j-1);
-       quickSort( a, j+1, r);
+        j = partition( q, l, r);
+       quickSort( q, l, j-1);
+       quickSort( q, j+1, r);
    }
     
 }
 
 
 
-int partition( int a[], int l, int r) {
+int partition( queue* q, int l, int r) {
    int pivot, i, j, t;
-   pivot = a[l];
+   pivot = q->surfaces[l].priVal;
    i = l; j = r+1;
         
    while( 1)
    {
-    do ++i; while( a[i] <= pivot && i <= r );
-    do --j; while( a[j] > pivot );
+    do ++i; while( q->surfaces[i].priVal <= pivot && i <= r );
+    do --j; while( q->surfaces[j].priVal > pivot );
     if( i >= j ) break;
-    t = a[i]; a[i] = a[j]; a[j] = t;
+    t = q->surfaces[i].priVal; q->surfaces[i].priVal = q->surfaces[j].priVal; q->surfaces[j].priVal = t;
    }
-   t = a[l]; a[l] = a[j]; a[j] = t;
+   t = q->surfaces[l].priVal; q->surfaces[l].priVal = q->surfaces[j].priVal; q->surfaces[j].priVal = t;
    return j;
 }

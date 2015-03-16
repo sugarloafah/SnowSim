@@ -11,13 +11,14 @@
 
 typedef struct {
 	mSurf surfaces[150];
+	int size;
 } queue;
 
 queue* queue_create();
-void queue_init(queue q); 
-void ordered_insert(int number,int a[],int size);
-void quickSort( int a[], int l, int r);
-int partition( int a[], int l, int r);
+void queue_init(queue *q); 
+void ordered_insert(mSurf * surf, queue * q);
+void quickSort( queue *q, int l, int r);
+int partition( queue *q, int l, int r);
 
 
 
