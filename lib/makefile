@@ -34,7 +34,7 @@ _DEPS = meshSurface.h
 DEPS = $(patsubst %,$(INCDIR)/%,$(_DEPS))
 
 # put a list of all the object files (with .o endings)
-_COMMON =  meshSurface.o priqueue.o
+_COMMON =  meshSurface.o 
 
 # convert them to point to the right place
 COMMON = $(patsubst %,$(ODIR)/%,$(_COMMON))

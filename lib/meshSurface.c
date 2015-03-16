@@ -12,9 +12,6 @@
 //mSurf (mesh Surface)
 mSurf * mSurf_create(Point *a, Point *b, Point *c){
 	mSurf *surf = (mSurf *) malloc(sizeof(mSurf));
-	point_set(&(surf->vertex[0]), 0,0,0);
-	point_set(&(surf->vertex[1]), 0,0,0);
-	point_set(&(surf->vertex[2]), 0,0,0);
 	point_copy( &(surf->vertex[0]), a);
 	point_copy( &(surf->vertex[1]), b);
 	point_copy( &(surf->vertex[2]), c);
@@ -43,9 +40,6 @@ void mSurf_updateSize(mSurf *surf){
 	Point a;
 	Point b;
 	Point c;
-	point_set(&a, 0,0,0);
-	point_set(&b, 0,0,0);
-	point_set(&c, 0,0,0);
 	point_copy( &a, &(surf->vertex[0]));
 	point_copy( &b, &(surf->vertex[1]));
 	point_copy( &c, &(surf->vertex[2]));

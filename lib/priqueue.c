@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
+#include "meshSurface.h"
 
 
 int main(int argc, char *argv[]) 
@@ -25,6 +25,24 @@ int main(int argc, char *argv[])
     for(i = 0; i < 9; ++i){
         printf(" %d ", a[i]);
     }
+}
+
+queue* queue_create(){
+  queue *q = (queue *) malloc(sizeof(queue));
+
+}
+void queue_init(queue q){
+  Point a;
+  Point b;
+  Point c;
+  Point d;
+  point_set( &a, -1,-1,0);
+  point_set( &b, -1,1,0);
+  point_set( &c, 1,1,0);
+  point_set( &d, 1, -1, 0);
+  mSurf *lTri = mSurf_create(&a, &b, &d);
+  mSurf *rTri = mSurf_create(&ab, &c, &d);
+
 }
 
 void ordered_insert(int number,int a[],int size){
