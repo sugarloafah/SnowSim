@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "meshSurface.h"
+#include "priqueue.h"
 
 
 int main(int argc, char *argv[]) 
@@ -27,12 +28,22 @@ int main(int argc, char *argv[])
         printf(" %d ", a[i]);
     }
     */
+    return 0;
 }
 
 queue* queue_create(){
   queue *q = (queue *) malloc(sizeof(queue));
-  q->surfaces = (mSurf) malloc(sizeof(mSurf)*150);
   q->size = 150;
+  Point a;
+  Point b;
+  Point c;
+  point_set(&a, 0, 0, 0);
+  point_set(&b, 0, 0, 0);
+  point_set(&c, 0, 0, 0);
+  for( int i = 0; i < q->size; i++){
+    q->surfaces[i] = mSurf_create() 
+  }
+  q->initFlag = 0;
   return q;
 
 }
@@ -46,28 +57,32 @@ void queue_init(queue *q){
   point_set( &c, 1,1,0);
   point_set( &d, 1, -1, 0);
   mSurf *lTri = mSurf_create(&a, &b, &d);
-  mSurf *rTri = mSurf_create(&ab, &c, &d);
+  mSurf *rTri = mSurf_create(&a, &c, &d);
   ordered_insert(lTri, q);
+  q->initFlag = 1;
   ordered_insert(rTri, q);
+
 
 }
 
 void ordered_insert(mSurf *surf,queue *q){
  int i=0;
  int index;
- while(surf->priVal > q->surfaces[i]){
-   i++;}
+ if (q->initFlag == 1){
+    while(surf->priVal > q->surfaces[i].priVal){
+      i++;}
+  }
 
 //push the rest to right by one
 index=i;
 
-i = 150;
+i = q->size;
 while ( i > index ) {
-  a[i] = a[i-1];
+  q->surfaces[i] = q->surfaces[i-1];
   i--;
 }
-a[i] = number;
-size++;
+q->surfaces[i] = surf;
+q->size++;
 
 }
 

@@ -12,6 +12,7 @@
 typedef struct {
 	mSurf surfaces[150];
 	int size;
+	int initFlag;
 } queue;
 
 queue* queue_create();

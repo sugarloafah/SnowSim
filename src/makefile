@@ -32,10 +32,10 @@ _DEPS = meshSurface.h
 DEPS = $(patsubst %,$(INCDIR)/%,$(_DEPS))
 
 # put a list of the executables here
-EXECUTABLES =  meshTest
+EXECUTABLES =  meshTest queuetest
 
 # put a list of all the object files here for all executables (with .o endings)
-_OBJ = 
+_OBJ = meshtest.o queuetest.o
 
 # convert them to point to the right place
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
@@ -61,6 +61,9 @@ all:
 
 
 meshTest: $(ODIR)/meshtest.o
+	$(CC) -o $(BINDIR)/$@ $^ $(LFLAGS) $(LIBS)		
+
+queuetest: $(ODIR)/queuetest.o
 	$(CC) -o $(BINDIR)/$@ $^ $(LFLAGS) $(LIBS)		
 
 
