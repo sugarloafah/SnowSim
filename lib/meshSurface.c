@@ -46,6 +46,7 @@ void mSurf_updateSize(mSurf *surf){
 	double area2 = (a.val[0]*(b.val[1]-c.val[1])) + (b.val[0]*(c.val[1]-a.val[1])) + (c.val[0]*(a.val[1]-b.val[1]));
 	double area = abs(area2/2);
 	surf->size = area;
+	mSurf_updatePriority(surf);
 
 }
 
