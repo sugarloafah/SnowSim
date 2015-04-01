@@ -1,0 +1,13 @@
+//Sam Goldberg and Chris Leete
+//queueTest.c
+
+
+
+#include <stdio.h>
+#include "meshSurface.h"
+#include "priqueue.h"
+
+int main(int argc, char *argv[]) {
+	queue * q = queue_create();
+	return 0;
+}

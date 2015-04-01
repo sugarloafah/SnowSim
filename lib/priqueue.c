@@ -37,20 +37,6 @@ queue* queue_create(){
   Point a;
   Point b;
   Point c;
-  point_set(&a, 0, 0, 0);
-  point_set(&b, 0, 0, 0);
-  point_set(&c, 0, 0, 0);
-  for( int i = 0; i < q->size; i++){
-    q->surfaces[i] = mSurf_create() 
-  }
-  q->initFlag = 0;
-  return q;
-
-}
-void queue_init(queue *q){
-  Point a;
-  Point b;
-  Point c;
   Point d;
   point_set( &a, -1,-1,0);
   point_set( &b, -1,1,0);
@@ -58,18 +44,18 @@ void queue_init(queue *q){
   point_set( &d, 1, -1, 0);
   mSurf *lTri = mSurf_create(&a, &b, &d);
   mSurf *rTri = mSurf_create(&a, &c, &d);
-  ordered_insert(lTri, q);
+  ordered_insert(*lTri, q);
   q->initFlag = 1;
-  ordered_insert(rTri, q);
-
-
+  ordered_insert(*rTri, q);
+  return q;
 }
 
-void ordered_insert(mSurf *surf,queue *q){
+
+void ordered_insert(mSurf surf,queue *q){
  int i=0;
  int index;
  if (q->initFlag == 1){
-    while(surf->priVal > q->surfaces[i].priVal){
+    while(surf.priVal > q->surfaces[i].priVal){
       i++;}
   }
 
