@@ -4,14 +4,20 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <time.h>
 #include "meshSurface.h"
 #include "priqueue.h"
 
 int main(int argc, char *argv[]) {
 	queue * q = queue_create();
-	printf("this should equal 2 = %f \n", q->size );
+	printf("size should equal 2 = %f \n", q->size );
+    printf("First element prival = %f \n", q->surfaces[0].priVal );
 	subdivision(q);
-	printf("this should equal 5 = %f \n", q->size );
+	printf("size post subdivision should equal 5 = %f \n", q->size );
+    printf("First element prival after subdivision = %f \n", q->surfaces[0].priVal );
   	
   	printf("%f \n", q->size);
 	return 0;

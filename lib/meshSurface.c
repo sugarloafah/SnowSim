@@ -30,7 +30,7 @@ void mSurf_updateNeighbors(mSurf *surf){
 }
 
 void mSurf_updatePriority(mSurf *surf){
-	float val = surf->count + (100 - surf->size);
+	float val = surf->count + (10 - surf->size);
 	surf->priVal = val;
 	return;
 
@@ -43,15 +43,19 @@ void mSurf_updateSize(mSurf *surf){
 	point_copy( &a, &(surf->vertex[0]));
 	point_copy( &b, &(surf->vertex[1]));
 	point_copy( &c, &(surf->vertex[2]));
-	double area2 = (a.val[0]*(b.val[1]-c.val[1])) + (b.val[0]*(c.val[1]-a.val[1])) + (c.val[0]*(a.val[1]-b.val[1]));
-	double area = abs(area2/2);
+	float area2 = (a.val[0]*(b.val[1]-c.val[1])) + (b.val[0]*(c.val[1]-a.val[1])) + (c.val[0]*(a.val[1]-b.val[1]));
+	float area = area2/2.0;
+	if (area < 0){
+		area = area * -1;
+	}
+	printf("surface size val = %f\n", area);
 	surf->size = area;
 	mSurf_updatePriority(surf);
 
 }
 
 //Point
-void point_set(Point * p, double x, double y, double z){
+void point_set(Point * p, float x, float y, float z){
 	p->val[0]=x;
 	p->val[1]=y;
 	p->val[2]=z;

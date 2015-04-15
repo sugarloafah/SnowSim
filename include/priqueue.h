@@ -10,7 +10,7 @@
 
 
 typedef struct {
-	mSurf surfaces[150];
+	mSurf *surfaces;
 	int size;
 	int initFlag;
 } queue;

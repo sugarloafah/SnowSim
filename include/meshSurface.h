@@ -9,14 +9,14 @@
 #include <stdlib.h>
 
 typedef struct {
-	double val[3];
+	float val[3];
 } Point;
 
 
 typedef struct {
 	Point vertex[3];
 	int countParticlesShot;
-	double size;
+	float size;
 	float priVal;
 	int count;
 } mSurf;
@@ -30,7 +30,7 @@ void mSurf_updateSize(mSurf *surf);
 void mSurf_updatePriority(mSurf *surf);
 
 //Point
-void point_set(Point *p, double x, double y, double z);
+void point_set(Point *p, float x, float y, float z);
 void point_copy(Point *to, Point *from);
 
 

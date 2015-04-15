@@ -14,16 +14,18 @@ queue* queue_create(){
   Point b;
   Point c;
   Point d;
-  point_set( &a, 0,-0,0);
+  point_set( &a, 0,0,0);
   point_set( &b, 0,1,0);
   point_set( &c, 1,1,0);
   point_set( &d, 1, 0, 0);
   q->initFlag = 0;
   mSurf *lTri = mSurf_create(&a, &b, &d);
   mSurf *rTri = mSurf_create(&a, &c, &d);
+  q->surfaces = (mSurf *) malloc(sizeof(mSurf)*150);
   ordered_insert(*lTri, q);
   q->initFlag = 1;
   ordered_insert(*rTri, q);
+  q->size = 2;
  
   return q;
 }
@@ -87,6 +89,7 @@ void ordered_insert(mSurf surf,queue *q){
  int index;
  if (q->size == 0){
   q->surfaces[0] = surf;
+  q->size++;
  }
  else{
    if (q->initFlag == 1){
