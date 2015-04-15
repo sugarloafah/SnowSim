@@ -13,13 +13,13 @@
 
 int main(int argc, char *argv[]) {
 	queue * q = queue_create();
-	printf("size should equal 2 = %f \n", q->size );
+	printf("size should equal 2 = %u \n", q->size );
     printf("First element prival = %f \n", q->surfaces[0].priVal );
 	subdivision(q);
-	printf("size post subdivision should equal 5 = %f \n", q->size );
+	printf("size post subdivision should equal 5 = %u \n", q->size );
     printf("First element prival after subdivision = %f \n", q->surfaces[0].priVal );
   	
-  	printf("%f \n", q->size);
+  	printf("%u \n", q->size);
 	return 0;
 }
 

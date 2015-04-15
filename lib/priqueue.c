@@ -19,8 +19,8 @@ queue* queue_create(){
   point_set( &c, 1,1,0);
   point_set( &d, 1, 0, 0);
   q->initFlag = 0;
-  mSurf *lTri = mSurf_create(&a, &b, &d);
-  mSurf *rTri = mSurf_create(&a, &c, &d);
+  mSurf *lTri = mSurf_create(&b, &a, &d); //Start from top left vertex, rotate clockwise
+  mSurf *rTri = mSurf_create(&b, &c, &d);
   q->surfaces = (mSurf *) malloc(sizeof(mSurf)*150);
   ordered_insert(*lTri, q);
   q->initFlag = 1;
@@ -38,35 +38,35 @@ void subdivision(queue * q){
   Point e;
   Point f;
   point_copy(&a, &q->surfaces[0].vertex[0]);
-  point_copy(&b, &q->surfaces[0].vertex[1]);
-  point_copy(&c, &q->surfaces[0].vertex[2]);
+  point_copy(&c, &q->surfaces[0].vertex[1]);
+  point_copy(&e, &q->surfaces[0].vertex[2]);
   mSurf *Tri0;
   mSurf *Tri1;
   mSurf *Tri2;
   mSurf *Tri3;
-  if( a.val[0] == b.val[0]){ //(left right tri)
-    d.val[1] = (a.val[1] + c.val[1]) /2.0;
-    d.val[0] = a.val[0];
-    e.val[1] = (a.val[1] + c.val[1]) /2.0;
-    e.val[0] = (a.val[0] + c.val[0]) /2.0;
-    f.val[1] = a.val[1];
-    f.val[0] = (a.val[0] + c.val[0]) /2.0;
-    Tri0 = mSurf_create(&a, &d, &f);
-    Tri1 = mSurf_create(&d, &b, &e);
-    Tri2 = mSurf_create(&d, &e, &f);
-    Tri3 = mSurf_create(&f, &e, &c);
+  if( a.val[0] == e.val[0]){ //(left right tri) 
+    b.val[0] = (a.val[0] + c.val[0]) /2.0;
+    b.val[1] = (a.val[1] + c.val[1]) /2.0;
+    d.val[1] = e.val[1] ;
+    d.val[0] = (a.val[0] + c.val[0]) /2.0;
+    f.val[0] = a.val[0];
+    f.val[1] = (a.val[1] + e.val[1]) /2.0;
+    Tri0 = mSurf_create(&a, &b, &f);
+    Tri1 = mSurf_create(&b, &c, &d);
+    Tri2 = mSurf_create(&f, &d, &e);
+    Tri3 = mSurf_create(&f, &b, &d);
   }
   else{ //(right right tri)
-    d.val[1] = (a.val[1] + c.val[1]) /2.0;
-    d.val[0] = (a.val[0] + c.val[0]) /2.0;
-    e.val[1] = a.val[1];
-    e.val[0] = (a.val[0] + c.val[0]) /2.0;
-    f.val[1] = (a.val[1] + c.val[1]) /2.0;
-    f.val[0] = a.val[0];
-    Tri0 = mSurf_create(&a, &e, &d);
-    Tri1 = mSurf_create(&d, &e, &f);
-    Tri2 = mSurf_create(&e, &b, &f);
-    Tri3 = mSurf_create(&d, &f, &c);
+    b.val[1] = a.val[1];
+    b.val[0] = (a.val[0] + c.val[0]) /2.0;
+    d.val[1] = (c.val[1] + e.val[1]) /2.0;
+    d.val[0] = c.val[0];
+    f.val[1] = (a.val[1] + e.val[1]) /2.0;
+    f.val[0] = (a.val[0] + e.val[0]) /2.0;
+    Tri0 = mSurf_create(&a, &b, &f);
+    Tri1 = mSurf_create(&b, &c, &d);
+    Tri2 = mSurf_create(&f, &d, &e);
+    Tri3 = mSurf_create(&b, &d, &f);
   }
   replace_surface(0, *Tri0, *Tri1, *Tri2, *Tri3, q);
 }
@@ -89,7 +89,7 @@ void ordered_insert(mSurf surf,queue *q){
  int index;
  if (q->size == 0){
   q->surfaces[0] = surf;
-  q->size++;
+  q->size = 1;
  }
  else{
    if (q->initFlag == 1){
@@ -102,7 +102,7 @@ void ordered_insert(mSurf surf,queue *q){
 
   i = q->size;
   while ( i > index ) {
-    q->surfaces[i] = q->surfaces[i-1];
+    q->surfaces[i] = q->surfaces[i+1];
     i--;
   }
   q->surfaces[i] = surf;

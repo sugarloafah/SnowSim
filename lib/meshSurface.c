@@ -30,7 +30,7 @@ void mSurf_updateNeighbors(mSurf *surf){
 }
 
 void mSurf_updatePriority(mSurf *surf){
-	float val = surf->count + (10 - surf->size);
+	float val = surf->count + surf->size;
 	surf->priVal = val;
 	return;
 
