@@ -20,7 +20,7 @@ mSurf * mSurf_create(Point *a, Point *b, Point *c){
 	return surf;
 }
 void mSurf_appendParticles(mSurf *surf, int numParticles){
-	surf->count = surf->count+1;
+	surf->count = surf->count+numParticles;
 	return;
 
 }
