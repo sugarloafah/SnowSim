@@ -3,8 +3,9 @@
 #include <math.h>
 #include "meshSurface.h"
 #include "priqueue.h"
+#include "hat.h"
 
-
+static Point hat_points[12]; //IN this order (cminX, cmaxX, cminY, cmaxY, cminZ, cmaxZ, tminX, tmaxX, tminY, tmaxY, tminZ, tmaxZ)
 
 
 queue* queue_create(){
@@ -140,4 +141,63 @@ int partition( queue* q, int l, int r) {
    }
    t = q->surfaces[l].priVal; q->surfaces[l].priVal = q->surfaces[j].priVal; q->surfaces[j].priVal = t;
    return j;
+}
+
+void createBoundingBox_Hat(){
+  float cminX, cmaxX, cminY, cmaxY, cminZ, cmaxZ, tminX, tmaxX, tminY, tmaxY, tminZ, tmaxZ;
+  cminX = 1.0;
+  cminY = 1.0;
+  cminZ = 1.0;
+  tminX = 1.0;
+  tminY = 1.0;
+  tminZ = 1.0;
+  cmaxX = 0.0;
+  cmaxY = 0.0;
+  cmaxZ = 0.0;
+  tmaxX = 0.0;
+  tmaxY = 0.0;
+  tmaxZ = 0.0;
+  for (i=0; i<2500; i++) { //num verticies, Hardcoded for HAT
+    if (i = vertex_offset_table[1]){ //cylander
+      if(verticies[i].x > cmaxX){
+        cmaxX = verticies[i].x;
+      }
+      if(verticies[i].x < cminX){
+        cminX = verticies[i].x;
+      }
+      if(verticies[i].y > cmaxY){
+        cmaxY = verticies[i].y;
+      }
+      if(verticies[i].y < cminY){
+        cminY = verticies[i].y;
+      }
+      if(verticies[i].z > cmaxZ){
+        cmaxZ = verticies[i].z;
+      }
+      if(verticies[i].z < cminZ){
+        cminZ = verticies[i].z;
+      }
+    }
+    if (i = vertex_offset_table[2]){ //torus
+      if(verticies[i].x > tmaxX){
+        tmaxX = verticies[i].x;
+      }
+      if(verticies[i].x < tminX){
+        tminX = verticies[i].x;
+      }
+      if(verticies[i].y > tmaxY){
+        tmaxY = verticies[i].y;
+      }
+      if(verticies[i].y < tminY){
+        tminY = verticies[i].y;
+      }
+      if(verticies[i].z > tmaxZ){
+        tmaxZ = verticies[i].z;
+      }
+      if(verticies[i].z < tminZ){
+        tminZ = verticies[i].z;
+      }
+    }
+  }
+
 }

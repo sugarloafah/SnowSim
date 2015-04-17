@@ -54,8 +54,7 @@ void DrawMesh(int index, int apply_transformations) {
 void DrawMeshes()
 {
 	unsigned int i;
-	//Draws all of the Objects with their correct Color according to their index
-	for (i=0; i<OBJECTS_COUNT; i++) {
+	for (i=0; i<2500; i++) { //num verticies, hardcoded for HAT
 		//Torus
 		if (i==0 || i==1 || i==22 || i==23 || i== 27 || i== 28 || i== 32 || i== 33 || i== 37 || i== 38){
 		glColor3f(0.3,0.3,0.3);
